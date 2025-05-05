@@ -1,0 +1,104 @@
+# API YANG JADI DISINI
+
+# Kosong
+GET http://localhost:5000/
+Content-Type: application/json
+
+# =============================
+
+###
+# == Halmaan Homepage ==
+GET http://localhost:5000/api/news
+Content-Type: application/json
+
+### 
+# == Halaman Lainnya - Pagination ==
+GET http://localhost:5000/api/news/page?page=2
+Content-Type: application/json
+
+###
+# == Halaman Detail berita ==
+GET http://localhost:5000/api/news/2
+Content-Type: application/json
+
+# -----------------------------
+###
+# == Halaman Login ==
+POST http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+  "username" : "User123",
+  "password" : "User123"
+}
+
+###
+# == Halaman Register == 
+POST http://localhost:5000/api/users/register
+Content-Type: application/json
+
+{
+  "name" : "Wijdan",
+  "username" : "Wijdan123",
+  "email" : "Wijdan123@gmail.com",
+  "password": "Wijdan123",
+  "confirm_password": "Wijdan123"
+}
+
+# ============================
+###
+# == Auth Tambahan - `Logout` ==
+DELETE http://localhost:5000/api/logout
+Content-Type: application/json
+
+###
+# == Auth Tambahan - `Refresh Token` ==
+GET http://localhost:5000/api/token
+Content-Type: application/json
+#===============================
+
+# -----------------------------
+###
+# == Halaman User - Dashboard ==
+GET http://localhost:5000/api/public/dashboard
+Authorization: token
+###
+DELETE http://localhost:5000/api/public/dashboard/like/:id_like
+Authorization: token
+###
+DELETE http://localhost:5000/api/public/dashboard/save/:id_save
+Authorization: token
+
+###
+# == Halaman User - Disukai ==
+GET http://localhost:5000/api/public/like
+Authorization: token
+###
+DELETE http://localhost:5000/api/public/like/:id_like
+Authorization: token
+
+###
+# == Halaman User - Disave ==
+GET http://localhost:5000/api/public/save
+Authorization: token
+###
+DELETE http://localhost:5000/api/public/save/:id_save
+Authorization: token
+
+###
+# == Halaman User - Edit Akun ==
+PUT http://localhost:5000/api/public/edit-account
+Content-Type: application/json
+Authorization: token
+
+{
+  "name" : "User",
+  "username" : "User123",
+  "email" : "User123@gmail.com",
+  "password_lama": "User123",
+  "password_baru": "User321"
+}
+
+# -----------------------------
+###
+# == Halaman Magang - ?

@@ -1,0 +1,40 @@
+###
+# == Tidak ada Halaman == 👷‍♀️
+# Ambil Data (✅ Sukses)
+GET http://localhost:5000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJ1c2VybmFtZSI6IldpamRhbjEyMyIsImVtYWlsIjoiV2lqZGFuMTIzQGdtYWlsLmNvbSIsImlhdCI6MTc0NTMyNjM5MiwiZXhwIjoxNzQ1MzI2NDEyfQ.EWkEuv2A95RX7daXLsKsaVEyKNHK4Fxf8LE4Is58DQ8
+###
+# == Tidak ada Halaman == 👷‍♀️
+# Refresh Token (✅ Sukses)
+GET http://localhost:5000/api/token
+Content-Type: application/json
+###
+# == Tidak ada Halaman == 👷‍♀️
+# Logout (✅ Sukses)
+DELETE http://localhost:5000/api/logout
+Content-Type: application/json
+
+###
+# == Halaman Login ==
+# Login Akun (✅ Sukses)
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+  "username" : "Wijdan123",
+  "password" : "Wijdan123"
+}
+
+###
+# == Halaman Register ==
+# Register Akun (✅ Sukses)
+POST http://localhost:5000/api/register
+Content-Type: application/json
+
+{
+  "name" : "Wijdan",
+  "username" : "Wijdan123",
+  "email" : "Wijdan123@gmail.com",
+  "password": "Wijdan123",
+  "confirm_password": "Wijdan123"
+}

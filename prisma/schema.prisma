@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id_user         Int       @id @default(autoincrement())
+  name            String
+  username        String    @unique
+  email           String    @unique
+  password        String    @db.VarChar(255)
+  role            Role      @default(public)
+  profile_picture String?   @db.VarChar(255)
+  refresh_token   String?   @db.Text
+  university      String?
+  major           String?
+  internship_date DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime? @updatedAt
+  deleted_at      DateTime?
+
+  // Relasi
+  news     News[]
+  comments Comment[]
+  likes    Like[]
+  saves    Save[]
+  marks    Mark[]
+}
+
+model Task {
+  id_task       Int       @id @default(autoincrement())
+  task_title    String
+  task_deadline DateTime
+  created_at    DateTime  @default(now())
+  updated_at    DateTime? @updatedAt
+  deleted_at    DateTime?
+
+  // Relasi
+  news  News[]
+  marks Mark[]
+}
+
+model Category {
+  id_category Int             @id @default(autoincrement())
+  category    String
+  status      Status_Category
+  created_at  DateTime        @default(now())
+  updated_at  DateTime?       @updatedAt
+  deleted_at  DateTime?
+
+  // Relasi
+  news News[]
+}
+
+model News {
+  id_news    Int          @id @default(autoincrement())
+  task       Task         @relation(fields: [taskId], references: [id_task], onDelete: Cascade, onUpdate: Cascade)
+  taskId     Int
+  category   Category     @relation(fields: [categoryId], references: [id_category], onDelete: Cascade, onUpdate: Cascade)
+  categoryId Int
+  author     User         @relation(fields: [authorId], references: [id_user], onDelete: Cascade, onUpdate: Cascade)
+  authorId   Int
+  title      String
+  content    String       @db.Text
+  image      String
+  status     Status_News? @default(pending)
+  created_at DateTime     @default(now())
+  updated_at DateTime?    @updatedAt
+  deleted_at DateTime?
+
+  // Relasi
+  likes    Like[]
+  saves    Save[]
+  comments Comment[]
+  pending  Pending[]
+}
+
+model Like {
+  id_like   Int      @id @default(autoincrement())
+  news      News     @relation(fields: [newsId], references: [id_news], onDelete: Cascade, onUpdate: Cascade)
+  newsId    Int
+  user      User     @relation(fields: [userId], references: [id_user], onDelete: Cascade, onUpdate: Cascade)
+  userId    Int
+  like      Boolean
+  timestamp DateTime @default(now())
+}
+
+model Save {
+  id_save    Int      @id @default(autoincrement())
+  news       News     @relation(fields: [newsId], references: [id_news], onDelete: Cascade, onUpdate: Cascade)
+  newsId     Int
+  user       User     @relation(fields: [userId], references: [id_user], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
+  saved_news Boolean
+  timestamp  DateTime @default(now())
+}
+
+model Comment {
+  id_comment Int      @id @default(autoincrement())
+  news       News     @relation(fields: [newsId], references: [id_news], onDelete: Cascade, onUpdate: Cascade)
+  newsId     Int
+  user       User     @relation(fields: [userId], references: [id_user], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
+  comment    String
+  timestamp  DateTime @default(now())
+}
+
+model Pending {
+  id_pending  Int         @id @default(autoincrement())
+  news        News        @relation(fields: [newsId], references: [id_news], onDelete: Cascade, onUpdate: Cascade)
+  newsId      Int
+  status      Status_News @default(pending)
+  note        String?
+  created_at  DateTime    @default(now())
+  resolved_at DateTime?
+}
+
+model Mark {
+  id_mark    Int       @id @default(autoincrement())
+  id_task    Task      @relation(fields: [taskId], references: [id_task], onDelete: Cascade, onUpdate: Cascade)
+  taskId     Int
+  id_user    User      @relation(fields: [userId], references: [id_user], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
+  mark       Int
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+
+  @@unique([userId, taskId])
+}
+
+// -- ENUM --
+enum Role {
+  public
+  intern
+  admin
+}
+
+enum Status_News {
+  pending
+  approved
+  revised
+}
+
+enum Status_Category {
+  accepted
+  decline
+}

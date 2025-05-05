@@ -1,0 +1,26 @@
+### Edit Akun
+GET http://localhost:5000/api/admin/task/
+Content-Type: application/json
+Authorization: Bereer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInVzZXJuYW1lIjoiQWRtaW4xMjMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDU2MzgxMzMsImV4cCI6MTc0NTYzODE1M30.kcBVQV0Ub8qdlsvJzdAUDZ2_VsL_pod2Zq9BhpiRLes
+
+{
+  "task": "Test Ubah",
+  "deadline": "2025-05-05T20:00:00.000Z"
+}
+
+
+###
+# Refresh Token 
+GET http://localhost:5000/api/token
+Content-Type: application/json
+
+
+###
+# == Halaman Login ==
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+  "username" : "Admin123",
+  "password" : "Admin123"
+}
